@@ -1,0 +1,58 @@
+:root {
+  --bg-deep: #0f1a14;
+  --bg-mid: #1a2e24;
+  --ink: #e8f0ea;
+  --muted: #8fa898;
+  --accent: #3d9b6a;
+  --accent-soft: rgba(61, 155, 106, 0.18);
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(61, 155, 106, 0.22), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(40, 90, 70, 0.35), transparent 50%),
+    linear-gradient(160deg, var(--bg-deep), var(--bg-mid));
+  background-attachment: fixed;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.app-header {
+  text-align: center;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 400;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
