@@ -10,6 +10,8 @@ A full-stack collaborative rich-text editor inspired by Google Docs. Concurrent 
 
 Open the URL in two browser tabs to collaborate instantly. When no backend WebSocket is configured (`VITE_WS_URL` unset), the client uses a `BroadcastChannel` multi-tab fallback so the GitHub Pages demo works without a hosted server.
 
+> **One-time setup:** In [Settings → Pages](https://github.com/adclintoncodes/Real-Time-Collaborative-Editor/settings/pages), set **Source** to **GitHub Actions** (or Deploy from branch `gh-pages` / `/`). Then re-run the [Deploy workflow](https://github.com/adclintoncodes/Real-Time-Collaborative-Editor/actions/workflows/deploy.yml).
+
 ### Architecture
 
 ```
