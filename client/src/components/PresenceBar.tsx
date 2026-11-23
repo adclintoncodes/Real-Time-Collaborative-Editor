@@ -11,12 +11,19 @@ interface PresenceBarProps {
   pendingOps: number;
 }
 
+const LABELS: Record<string, string> = {
+  open: 'live',
+  connecting: 'connecting',
+  closed: 'offline',
+  fallback: 'multi-tab demo',
+};
+
 export default function PresenceBar({ peers, connectionLabel, pendingOps }: PresenceBarProps) {
   return (
     <div className="presence-bar" aria-label="Collaborators">
       <div className="presence-status">
         <span className={`status-dot status-${connectionLabel}`} />
-        <span className="status-text">{connectionLabel}</span>
+        <span className="status-text">{LABELS[connectionLabel] ?? connectionLabel}</span>
         {pendingOps > 0 ? <span className="pending-badge">{pendingOps} queued</span> : null}
       </div>
       <ul className="presence-avatars">

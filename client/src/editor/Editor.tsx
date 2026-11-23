@@ -180,11 +180,48 @@ export default function Editor({ documentId, clientId, displayName }: EditorProp
             from: msg.from ?? 0,
             to: msg.to ?? 0,
           });
+          setPeers((prev) => {
+            if (prev.some((p) => p.clientId === msg.clientId)) {
+              return prev.map((p) =>
+                p.clientId === msg.clientId
+                  ? {
+                      ...p,
+                      userName: msg.userName ?? p.userName,
+                      color: msg.color ?? p.color,
+                    }
+                  : p,
+              );
+            }
+            return [
+              ...prev,
+              {
+                clientId: msg.clientId!,
+                userId: msg.userId ?? msg.clientId!,
+                userName: msg.userName ?? 'Peer',
+                color: msg.color ?? '#5a9fd4',
+              },
+            ];
+          });
           view.dispatch(view.state.tr);
           return;
         }
 
         if (msg.type === 'op' && msg.clientId !== clientId && Array.isArray(msg.steps)) {
+          if (msg.clientId) {
+            setPeers((prev) =>
+              prev.some((p) => p.clientId === msg.clientId)
+                ? prev
+                : [
+                    ...prev,
+                    {
+                      clientId: msg.clientId!,
+                      userId: msg.clientId!,
+                      userName: `Peer ${msg.clientId!.slice(-4)}`,
+                      color: '#5a9fd4',
+                    },
+                  ],
+            );
+          }
           applyingRemote.current = true;
           try {
             let tr = view.state.tr;
