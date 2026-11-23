@@ -1,5 +1,23 @@
 /**
- * Server entry — Phase 1 placeholder.
- * Full gateway, OT engine, API, and consumers land in Phases 2–3.
+ * Collab server entry — WebSocket gateway + OT engine (Phase 2).
+ * REST API + Kafka consumer attach in Phase 3.
  */
-console.log('[collab-server] Phase 1 scaffold ready. Waiting for Phase 2 gateway…');
+
+import { startGateway } from './gateway/wsGateway.js';
+import { disconnectProducer } from './kafka/producer.js';
+
+const gateway = startGateway({
+  port: Number(process.env.PORT ?? 3001),
+  path: '/ws',
+  allowAnonymous: true,
+});
+
+async function shutdown(signal: string): Promise<void> {
+  console.log(`[server] shutting down on ${signal}`);
+  await gateway.close();
+  await disconnectProducer();
+  process.exit(0);
+}
+
+process.on('SIGINT', () => void shutdown('SIGINT'));
+process.on('SIGTERM', () => void shutdown('SIGTERM'));
